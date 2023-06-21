@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Searching{% endblock title %}
+
+{% block body %}
+<div class="container my-3">
+    <h1>Search results</h1>
+    </div>
+    {% if sitem %}
+    <div class="container my-4">
+        <hr>
+        <div class="d-flex flex-row">
+        {% for food in sitem %}
+        <div class="d-flex flex-column mx-4">
+            <div class="card" style="width: 18rem;">
+        <img src="{{food.food_img.url}}" class="card-img-top" alt="...">
+        <div class="card-body">
+        <h5 class="card-title">{{food.food_name}}</h5>
+        <p class="card-text">{{food.food_description}}</p>
+        <h4>Rs.{{food.price}}</h4>
+        {% if user.is_authenticated %}
+        <a href="/order" class="btn btn-success">Add to cart</a>
+        <a href="/order" class="btn btn-warning">Order Now</a>
+        {% else %}
+        <button type="button" class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+    Add to cart
+    </button>
+    <button type="button" class="btn btn-warning mx-2" data-bs-toggle="modal" data-bs-target="#loginModal">
+    Order Now
+    </button>
+        {% endif %}
+        </div>
+        </div>
+        </div>
+        {% endfor %}
+        </div>
+    </div>
+    {% else %}
+    <div class="container">
+        <h5>No search results</h5>
+        <p>Your search -- <b>{{query}}<b></p>
+        </div>
+        {% endif %}
+{% endblock body %}

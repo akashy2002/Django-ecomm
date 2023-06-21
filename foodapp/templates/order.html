@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% block title %}Piggy Restro{% endblock title %}
+{% load static %}
+{% block body %}
+
+<div class="container">
+    <div class="py-5 text-center">
+      <h2 class="text-success">Checkout form</h2>
+    </div>
+<hr>      
+
+    <div class="row g-5">
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-primary">Your Cart</span>
+          {% comment %} <span class="badge bg-primary rounded-pill">3</span> {% endcomment %}
+        </h4>
+        <div class="container my-4">
+          <hr>
+          <div class="d-flex flex-row">
+            {% for food in catitem %}
+            <div class="d-flex flex-column mx-4">
+              <div class="card">
+                <img src="{{food.food_img.url}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">{{food.food_name}}</h5>
+                  <p class="card-text">{{food.food_description}}</p>
+                  <h4>Rs.{{food.price}}</h4>
+
+                <div class="card-footer bg-transparent border-success">
+                  {% if food  %}
+                  <div class="row me-3">
+                    <div class="col-2">
+
+                      <form action="#{{food.id}}" method="post">
+                        {% csrf_token %}
+                        <input type="text" name="minus" id="" value={{food.id}} hidden>
+                        <input type="text" name="cartid" id="" value={{food.id}} hidden>
+                        <button class="btn btn-primary">-</button>
+                      </form>
+
+                    </div>
+                    <div class="col">
+                    </div>
+                    <div class="col-2">
+                      <form action="#{{food.id}}" method="post">
+                        {% csrf_token %}
+                        <input type="text" name="cartid" id="" value="{{food.id}}" hidden>
+                        <input type="submit" class="btn btn-primary" name="" id="" value="+">
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                {% endif %}
+              </div>
+                </div>
+            </div>
+          </div>
+
+          {% endfor %}
+
+        </div>
+      </div>
+
+
+      {% endblock body %}
